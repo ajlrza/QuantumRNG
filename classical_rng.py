@@ -46,3 +46,12 @@ print(philox)
 sfc64 = sfc64_classical_rng(1)
 print('====SFC64====')
 print(sfc64)
+
+quantum = quantum_rng(
+    number_range=4,    
+    register=4,      
+    h_gate=4,       
+    reset=True       
+)
+print('====Quantum====')
+print(quantum)
