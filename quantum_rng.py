@@ -3,6 +3,7 @@ from qiskit.primitives import StatevectorSampler
 from qiskit.quantum_info import Operator
 from qiskit import transpile
 from qiskit.circuit.library import HGate
+from qiskit_aer import AerSimulator
 import numpy as np
 
 def check_params(func, *args, **kwargs):
@@ -25,6 +26,9 @@ def quantum_rng(number_range, register=None, h_gate=None, reset=None):
     if h_gate is not None:
         for number in range(1, number_range):
             qc.append(HGate(), [number])
-        qc.measure_all(add_bits=False)
-    return qc
-
+        me = qc.measure_all(add_bits=False)
+        simulator = AerSimulator()
+        job = simulator.run(qc, shots=1024)
+        result = job.result()
+        counts = result.get_counts()
+        return counts
